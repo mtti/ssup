@@ -30,8 +30,8 @@ Option | CLI | Env | Description
 `dryRun` | `--dry-run` | | Do everything normally, just don't actually upload anything.
 `granularInvalidation` | `--granular-invalidation` | | Create invalidations for individual changed files. Normally the entire distribution is invalidated with `/*`.
 `keyPrefix` | `--key-prefix` | | Prefix for S3 object keys. A trailing slash is always added to the CLI option if one is not given.
-`checkMD5` | `--no-check-md5` | | Disable to not check for changed files based on MD5 hashes. Probably don't use this with `granularInvalidation`.
-`setMD5` | `--no-set-md5` | | Disable setting MD5 checksum metadata on uploaded files.
+`checkMD5` | `--check-md5`<br>`--no-check-md5` | | Check for changed files based on the `content-md5` metadata header. Don't disable this if you're using `granularInvalidation`. Defaults to `true`.
+`setMD5` | `--set-md5`<br>`--no-set-md5` | | Set the `content-md5` metadata entry for uploaded files. Defaults to `true`.
 &nbsp; | `--quiet` | | Suppress informational messages.
 
 ## Quirks
