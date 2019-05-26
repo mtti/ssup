@@ -1,3 +1,4 @@
+const { getTimestampString } = require('./utils');
 
 /**
  * Check if a CloudFront distribution has any ongoing invalidations.

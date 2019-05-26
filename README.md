@@ -1,4 +1,4 @@
-A command line utility for uploading static websites to Amazon S3.
+**ssup** (**S**tatic **S**ite **Up**loader) is a command line utility for uploading static websites to Amazon S3.
 
 ## Features
 
@@ -51,8 +51,6 @@ You should give any script like this AWS credentials with no more access rights 
             "Action": [
                 "s3:PutObject",
                 "s3:GetObject",
-                "s3:DeleteObject",
-                "s3:GetObjectAcl",
                 "s3:PutObjectAcl"
             ],
             "Resource": [
@@ -65,7 +63,9 @@ You should give any script like this AWS credentials with no more access rights 
 
 ### CloudFront
 
-AWS does not support allowing `cloudfront:CreateInvalidation` for specific distributions, therefore the permission must be granted to all resources. Also, `cloudfront:ListInvalidations` is only needed if `checkOngoingInvalidations` is enabled.
+AWS does not support allowing `cloudfront:CreateInvalidation` for specific distributions, therefore the permission must be granted to all resources with `"*"`.
+
+Note: `cloudfront:ListInvalidations` is only needed if `checkOngoingInvalidations` is enabled.
 
 ```JSON
 {

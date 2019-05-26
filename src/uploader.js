@@ -4,7 +4,6 @@ const AWS = require('aws-sdk');
 const pLimit = require('p-limit');
 const { createInvalidation, hasOngoingInvalidations } = require('./cloudfront');
 const { replaceExtension, scanDirectory, hashFile } = require('./local-fs');
-const { getTimestampString } = require('./utils');
 
 const REQUIRED_OPTIONS = [
   'sourceDirectory',
@@ -154,6 +153,7 @@ class Uploader {
 
   async run() {
     if (this._options.checkOngoingInvalidations && this._options.distributionId) {
+      this._log('Looking for ongoing CloudFront invalidations');
       const busy = await hasOngoingInvalidations(
         this._cloudfront,
         this._options.distributionId
@@ -163,10 +163,14 @@ class Uploader {
       }
     }
 
+    this._log('Gathering files');
     const files = await this._gatherFiles();
+
+    this._log('Uploading files');
     const uploadedUris = await this._uploadFiles(files);
 
     if (this._options.distributionId) {
+      this._log('Creating CloudFront invalidation');
       if (this._options.granularInvalidation) {
         await createInvalidation(this._cloudfront, this._options.distributionId, uploadedUris);
       } else {

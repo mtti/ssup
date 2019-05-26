@@ -1,5 +1,6 @@
 {
-  "name": "@mtti/s3-upload",
+  "name": "@mtti/ssup",
+  "description": "Static site uploader",
   "private": true,
   "version": "0.1.0",
   "license": "Apache-2.0",
@@ -7,11 +8,12 @@
     "node": ">=11.0.0"
   },
   "bin": {
-    "mhp": "src/main.js"
+    "ssup": "src/cli.js"
   },
   "files": [
     "src"
   ],
+  "main": "src/index.js",
   "scripts": {
     "lint": "eslint \"src/bin/**/*.js\" \"src/lib/**/*.js\"",
     "lint:fix": "eslint --fix \"src/bin/**/*.js\" \"src/lib/**/*.js\"",
@@ -21,10 +23,8 @@
   },
   "dependencies": {
     "aws-sdk": "2.461.0",
-    "fs-extra": "8.0.1",
     "minimist": "1.2.0",
-    "moment": "^2.24.0",
-    "p-limit": "^2.2.0"
+    "p-limit": "2.2.0"
   },
   "devDependencies": {
     "eslint": "5.16.0",
