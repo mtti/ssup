@@ -44,16 +44,16 @@ async function scanDirectory(directory, root) {
   }
 
   const children = fs.readdirSync(directory)
-    .map(name => ({ name, path: path.join(directory, name)}))
-    .map(child => ({ ...child, relativePath: path.relative(root, child.path)}))
-    .map(child => ({ ...child, stat: fs.statSync(child.path)}));
+    .map(name => ({ name, path: path.join(directory, name) }))
+    .map(child => ({ ...child, relativePath: path.relative(root, child.path) }))
+    .map(child => ({ ...child, stat: fs.statSync(child.path) }));
 
   const files = children
     .filter(child => child.stat.isFile());
   const subdirectories = children
     .filter(child => child.stat.isDirectory());
 
-  for (let subdirectory of subdirectories) {
+  for (const subdirectory of subdirectories) {
     const subdirFiles = await scanDirectory(subdirectory.path, root);
     files.push(...subdirFiles);
   }

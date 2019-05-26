@@ -26,7 +26,7 @@ async function hasOngoingInvalidations(cf, distributionId) {
 async function createInvalidation(cf, distributionId, keys = null) {
   let items = [];
   if (keys === null) {
-    items = [ '/*' ];
+    items = ['/*'];
   } else if (!Array.isArray(keys)) {
     throw new Error('keys must be an array or null');
   } else if (keys.length === 0) {
@@ -45,7 +45,7 @@ async function createInvalidation(cf, distributionId, keys = null) {
         Quantity: items.length,
         Items: items,
       },
-    }
+    },
   };
 
   try {

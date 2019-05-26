@@ -23,15 +23,20 @@ const DEFAULT_OPTIONS = {
   dryRun: false,
 };
 
+function defaultLogger(...messages) {
+  // eslint-disable-next-line no-console
+  console.error(...messages);
+}
+
 class Uploader {
   constructor(options) {
     this._options = {
       ...DEFAULT_OPTIONS,
-      logger: this._defaultLogger.bind(this),
-      ...options
+      logger: defaultLogger,
+      ...options,
     };
 
-    for (let key of REQUIRED_OPTIONS) {
+    for (const key of REQUIRED_OPTIONS) {
       if (!this._options[key]) {
         throw new Error(`Missing required option: ${key}`);
       }
@@ -60,10 +65,6 @@ class Uploader {
       return;
     }
     this._logger(...messages);
-  }
-
-  _defaultLogger(...messages) {
-    console.error(...messages);
   }
 
   async _contentChecksumMatches(key, checksum) {
@@ -137,7 +138,7 @@ class Uploader {
         }
       }
       if (this._options.setMD5) {
-        s3Params.Metadata['content-md5']= file.checksum;
+        s3Params.Metadata['content-md5'] = file.checksum;
       }
 
       if (!this._options.dryRun) {
@@ -156,7 +157,7 @@ class Uploader {
       this._log('Looking for ongoing CloudFront invalidations');
       const busy = await hasOngoingInvalidations(
         this._cloudfront,
-        this._options.distributionId
+        this._options.distributionId,
       );
       if (busy) {
         throw new Error('Distribution has ongoing invalidations');

@@ -59,4 +59,6 @@ function getTimestampString() {
   return `${year}${month}${day}${hours}${minutes}${seconds}`;
 }
 
-module.exports = { ensureEndsWith, getTimestampString, pad, transform };
+module.exports = {
+  ensureEndsWith, getTimestampString, pad, transform,
+};

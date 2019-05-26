@@ -5,7 +5,7 @@ const { ensureEndsWith, transform } = require('./utils');
 const { Uploader } = require('./uploader');
 
 const argvToOptions = [
-  ['concurrency', 'concurrency', value => parseInt(value)],
+  ['concurrency', 'concurrency', value => parseInt(value, 10)],
   ['acl', 'acl'],
   ['key-prefix', 'keyPrefix', value => ensureEndsWith(value, '/')],
   ['check-md5', 'checkMD5', value => !!value],

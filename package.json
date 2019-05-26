@@ -15,8 +15,8 @@
   ],
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint \"src/bin/**/*.js\" \"src/lib/**/*.js\"",
-    "lint:fix": "eslint --fix \"src/bin/**/*.js\" \"src/lib/**/*.js\"",
+    "lint": "eslint \"src/**/*.js\" \"src/**/*.js\"",
+    "lint:fix": "eslint --fix \"src/**/*.js\" \"src/**/*.js\"",
     "jest": "jest",
     "jest:verbose": "jest --verbose",
     "test": "npm run lint && npm run jest"
