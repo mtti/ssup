@@ -1,0 +1,39 @@
+{
+  "name": "@mtti/s3-upload",
+  "private": true,
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=11.0.0"
+  },
+  "bin": {
+    "mhp": "src/main.js"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "lint": "eslint \"src/bin/**/*.js\" \"src/lib/**/*.js\"",
+    "lint:fix": "eslint --fix \"src/bin/**/*.js\" \"src/lib/**/*.js\"",
+    "jest": "jest",
+    "jest:verbose": "jest --verbose",
+    "test": "npm run lint && npm run jest"
+  },
+  "dependencies": {
+    "aws-sdk": "2.461.0",
+    "fs-extra": "8.0.1",
+    "minimist": "1.2.0",
+    "moment": "^2.24.0",
+    "p-limit": "^2.2.0"
+  },
+  "devDependencies": {
+    "eslint": "5.16.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.17.2",
+    "jest": "24.8.0",
+    "mock-fs": "4.10.0"
+  },
+  "jest": {
+    "collectCoverage": true
+  }
+}

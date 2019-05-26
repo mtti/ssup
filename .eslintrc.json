@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb-base",
+  "env": {
+      "jest": true
+  },
+  "rules": {
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": ["src/test/**/*.js", "src/**/*.spec.js"]}],
+      "import/no-unresolved": [2, {"caseSensitive": false}],
+      "no-underscore-dangle": "off",
+      "prefer-destructuring": "off"
+  }
+}
