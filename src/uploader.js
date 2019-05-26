@@ -165,10 +165,12 @@ class Uploader {
 
     if (this._options.distributionId) {
       this._log('Creating CloudFront invalidation');
-      if (this._options.granularInvalidation) {
-        await createInvalidation(this._cloudfront, this._options.distributionId, uploadedUris);
-      } else {
-        await createInvalidation(this._cloudfront, this._options.distributionId, uploadedUris);
+      if (!this._options.dryRun) {
+        if (this._options.granularInvalidation) {
+          await createInvalidation(this._cloudfront, this._options.distributionId, uploadedUris);
+        } else {
+          await createInvalidation(this._cloudfront, this._options.distributionId, uploadedUris);
+        }
       }
     }
   }
