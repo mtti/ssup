@@ -12,9 +12,12 @@ function ensureEndsWith(value, suffix) {
   return value;
 }
 
-function transform(source, target, mapping) {
+function transform(source, mapping) {
+  const result = {};
+
   for (const [sourceKey, targetKey, transformer] of mapping) {
     if (!(sourceKey in source)) {
+      // eslint-disable-next-line no-continue
       continue;
     }
 
@@ -24,8 +27,10 @@ function transform(source, target, mapping) {
       transformedValue = transformer(sourceValue);
     }
 
-    target[targetKey] = transformedValue;
+    result[targetKey] = transformedValue;
   }
+
+  return result;
 }
 
 /**

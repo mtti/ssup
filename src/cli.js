@@ -49,7 +49,7 @@ function fail(message = null, exitCode = 1) {
 
 (async () => {
   try {
-    const options = {};
+    let options = {};
     const argv = minimist(process.argv.slice(2));
     if (argv._.length < 1) {
       fail('Missing source path');
@@ -60,13 +60,16 @@ function fail(message = null, exitCode = 1) {
       const configPath = path.resolve(process.cwd(), argv.config);
       console.error(`Loading options from ${configPath}`);
       const fileConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-      Object.assign(options, fileConfig);
+      options = { ...options, ...fileConfig };
     }
 
     // Derive options from environment variables and CLI arguments
-    transform(process.env, options, envToOptions);
-    transform(argv, options, argvToOptions);
-    options.sourceDirectory = path.resolve(process.cwd(), argv._[0]);
+    options = {
+      ...options,
+      ...transform(process.env, envToOptions),
+      ...transform(argv, argvToOptions),
+      sourceDirectory: path.resolve(process.cwd(), argv._[0]),
+    };
 
     const uploader = new Uploader(options);
     await uploader.run();

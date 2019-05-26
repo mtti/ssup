@@ -8,6 +8,7 @@
       "import/no-unresolved": [2, {"caseSensitive": false}],
       "no-underscore-dangle": "off",
       "prefer-destructuring": "off",
+      "no-await-in-loop": "off",
       "no-restricted-syntax": "off"
   }
 }

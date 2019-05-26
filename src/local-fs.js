@@ -31,18 +31,7 @@ function replaceExtension(originalPath, newExtension = null) {
   return parts.join('.');
 }
 
-/**
- * Recursively retrieve a list of all files in a directory and all of its subdirectories.
- *
- * @param {String} directory The directory to scan
- * @param {String} root Used internally with recursive calls
- * @return {Promise<Array>} A promise which resolves to an array with file objects.
- */
-async function scanDirectory(directory, root) {
-  if (!root) {
-    root = directory;
-  }
-
+async function _scanDirectory(directory, root) {
   const children = fs.readdirSync(directory)
     .map(name => ({ name, path: path.join(directory, name) }))
     .map(child => ({ ...child, relativePath: path.relative(root, child.path) }))
@@ -54,11 +43,22 @@ async function scanDirectory(directory, root) {
     .filter(child => child.stat.isDirectory());
 
   for (const subdirectory of subdirectories) {
-    const subdirFiles = await scanDirectory(subdirectory.path, root);
+    const subdirFiles = await _scanDirectory(subdirectory.path, root);
     files.push(...subdirFiles);
   }
 
   return files;
+}
+
+/**
+ * Recursively retrieve a list of all files in a directory and all of its subdirectories.
+ *
+ * @param {String} directory The directory to scan
+ * @param {String} root Used internally with recursive calls
+ * @return {Promise<Array>} A promise which resolves to an array with file objects.
+ */
+function scanDirectory(directory) {
+  return _scanDirectory(directory, directory);
 }
 
 module.exports = { hashFile, replaceExtension, scanDirectory };
