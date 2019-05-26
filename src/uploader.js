@@ -23,16 +23,10 @@ const DEFAULT_OPTIONS = {
   dryRun: false,
 };
 
-function defaultLogger(...messages) {
-  // eslint-disable-next-line no-console
-  console.error(...messages);
-}
-
 class Uploader {
   constructor(options) {
     this._options = {
       ...DEFAULT_OPTIONS,
-      logger: defaultLogger,
       ...options,
     };
 
@@ -61,10 +55,9 @@ class Uploader {
   }
 
   _log(...messages) {
-    if (!this._logger) {
-      return;
+    if (this._logger) {
+      this._logger(...messages);
     }
-    this._logger(...messages);
   }
 
   async _contentChecksumMatches(key, checksum) {

@@ -8,7 +8,13 @@
 
 ## Configuration
 
-Many configuration options are available and can be provided on the command line, as environment variables and from a configuration file with the `--config` CLI flag.
+There are a number of ways to configure how *ssup* works:
+* Environment variables
+* Command line options
+* Configuration file called `.ssuprc.json` in the source directory.
+* A configuration file specified with the `--config` command line option. If this is given, the `.ssuprc.json` file is ignored.
+
+The following table lists all available configuration options and the different ways each can be set:
 
 Option | CLI | Env | Description
 -- | --- | --- | ---
@@ -26,6 +32,15 @@ Option | CLI | Env | Description
 `keyPrefix` | `--key-prefix` | | Prefix for S3 object keys. A trailing slash is always added to the CLI option if one is not given.
 `checkMD5` | `--no-check-md5` | | Disable to not check for changed files based on MD5 hashes. Probably don't use this with `granularInvalidation`.
 `setMD5` | `--no-set-md5` | | Disable setting MD5 checksum metadata on uploaded files.
+&nbsp; | `--quiet` | | Suppress informational messages.
+
+## Quirks
+
+* If a configuration file is explicitly specified with `--config`, any `.ssuprc.json` file in the source directory is ignored.
+* Files which exist in the bucket but not in the source directory are **not** deleted. This is an *upload* tool, not a *sync* tool.
+* All files and directories starting with a `.` are ignored.
+* An S3 metadata entry with the key `content-md` is created for each uploaded file, containing a Base64-encoded MD5 hash of the file's contents. This is used for detecting changed files to avoid unnecessary uploads, and for generating item lists for granular CloudFront invalidations.
+* Files with the extension `.html` are uploaded without the extension, except if they're called `index.html`. This behavior is, like, 50% of the whole point of this application but is mentioned here in case you didn't read the beginning of this file.
 
 ## IAM permissions
 

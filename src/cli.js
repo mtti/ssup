@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const minimist = require('minimist');
 const { ensureEndsWith, transform } = require('./utils');
@@ -40,26 +40,50 @@ function fail(message = null, exitCode = 1) {
     }
   }
 
-  console.error('\n');
-
   if (exitCode !== null) {
     process.exit(exitCode);
+  }
+}
+
+const defaultLogger = (...args) => {
+  console.error(...args);
+};
+
+let logger = defaultLogger;
+
+function log(...args) {
+  if (logger) {
+    logger(...args);
   }
 }
 
 (async () => {
   try {
     let options = {};
+    let configPath = null;
     const argv = minimist(process.argv.slice(2));
-    if (argv._.length < 1) {
-      fail('Missing source path');
+
+    if (argv.quiet) {
+      logger = null;
     }
 
-    // Load configuration file if specified
+    if (argv._.length > 0) {
+      options.sourceDirectory = path.resolve(process.cwd(), argv._[0]);
+      const rcPath = path.join(options.sourceDirectory, '.ssuprc.json');
+      const rcExists = await fs.exists(rcPath);
+      if (rcExists) {
+        configPath = rcPath;
+      }
+    }
+
+    // Explicitly specified config file overrides the rc file
     if (argv.config) {
-      const configPath = path.resolve(process.cwd(), argv.config);
-      console.error(`Loading options from ${configPath}`);
-      const fileConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      configPath = path.resolve(process.cwd(), argv.config);
+    }
+
+    if (configPath) {
+      log(`Loading options from ${configPath}`);
+      const fileConfig = JSON.parse(await fs.readFile(configPath, 'utf8'));
       options = { ...options, ...fileConfig };
     }
 
@@ -69,6 +93,7 @@ function fail(message = null, exitCode = 1) {
       ...transform(process.env, envToOptions),
       ...transform(argv, argvToOptions),
       sourceDirectory: path.resolve(process.cwd(), argv._[0]),
+      logger: log,
     };
 
     const uploader = new Uploader(options);

@@ -33,6 +33,7 @@ function replaceExtension(originalPath, newExtension = null) {
 
 async function _scanDirectory(directory, root) {
   const children = fs.readdirSync(directory)
+    .filter(name => name[0] !== '.')
     .map(name => ({ name, path: path.join(directory, name) }))
     .map(child => ({ ...child, relativePath: path.relative(root, child.path) }))
     .map(child => ({ ...child, stat: fs.statSync(child.path) }));
