@@ -7,8 +7,6 @@ const { replaceExtension, scanDirectory, hashFile } = require('./local-fs');
 
 const REQUIRED_OPTIONS = [
   'sourceDirectory',
-  'accessKeyId',
-  'secretAccessKey',
   'bucket',
 ];
 
@@ -36,21 +34,32 @@ class Uploader {
       }
     }
 
+    let awsCredentials = null;
+    if (this._options.accessKeyId) {
+      if (!this._options.secretAccessKey) {
+        throw new Error('secretAccessKey is required when accessKeyId is present');
+      }
+      awsCredentials = {
+        accessKeyId: this._options.accessKeyId,
+        secretAccessKey: this._options.secretAccessKey,
+      };
+    }
+
     this._limit = pLimit(this._options.concurrency);
     this._logger = this._options.logger;
 
-    this._s3 = new AWS.S3({
-      credentials: {
-        accessKeyId: this._options.accessKeyId,
-        secretAccessKey: this._options.secretAccessKey,
-      },
-    });
+    const s3Options = {};
+    if (awsCredentials) {
+      s3Options.credentials = { ...awsCredentials };
+    }
+    this._s3 = new AWS.S3(s3Options);
 
     if (this._options.distributionId) {
-      this._cloudfront = new AWS.CloudFront({
-        accessKeyId: this._options.accessKeyId,
-        secretAccessKey: this._options.secretAccessKey,
-      });
+      const cloudFrontOptions = {};
+      if (awsCredentials) {
+        Object.assign(cloudFrontOptions, awsCredentials);
+      }
+      this._cloudfront = new AWS.CloudFront(cloudFrontOptions);
     }
   }
 
