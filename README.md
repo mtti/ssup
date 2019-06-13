@@ -19,9 +19,9 @@ The following table lists all available configuration options and the different 
 Option | CLI | Env | Description
 -- | --- | --- | ---
 `sourceDirectory` | The first unnamed argument | &nbsp; | **(Required)** The base directory to upload from.
-`accessKeyId` | &nbsp; | `AWS_ACCESS_KEY_ID` | **(Required)** AWS access key ID
-`secretAccessKey` | &nbsp; | `AWS_SECRET_ACCESS_KEY` | **(Required)** AWS access secret
 `bucket` | `--bucket` | `BUCKET` | **(Required)** Amazon S3 bucket to upload to.
+`accessKeyId` | &nbsp; | `AWS_ACCESS_KEY_ID` |AWS access key ID
+`secretAccessKey` | &nbsp; | `AWS_SECRET_ACCESS_KEY` | AWS access secret
 `acl` | `--acl` | | ACL to set on each uploaded object. Defaults to `public-read`.
 `checkOngoingInvalidations` | &nbsp; | | Do not upload changed files if the CloudFront distribution has ongoing invalidations. Experimental. Defaults to `false`.
 `concurrency` | `--concurrency` | | Max number of files to upload simultaneously. Defaults to `5`.
