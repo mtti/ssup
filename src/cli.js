@@ -19,10 +19,11 @@ const argvToOptions = [
 ];
 
 const envToOptions = [
-  ['BUCKET', 'bucket'],
-  ['AWS_ACCESS_KEY_ID', 'accessKeyId'],
-  ['AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_KEY'],
-  ['DISTRIBUTION_ID', 'distribution'],
+  ['SSUP_AWS_ACCESS_KEY_ID', 'accessKeyId'],
+  ['SSUP_AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_KEY'],
+  ['SSUP_BUCKET', 'bucket'],
+  ['SSUP_DISTRIBUTION_ID', 'distribution'],
+  ['SSUP_KEY_PREFIX', 'keyPrefix'],
 ];
 
 /**

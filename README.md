@@ -19,17 +19,17 @@ The following table lists all available configuration options and the different 
 Option | CLI | Env | Description
 -- | --- | --- | ---
 `sourceDirectory` | The first unnamed argument | &nbsp; | **(Required)** The base directory to upload from.
-`bucket` | `--bucket` | `BUCKET` | **(Required)** Amazon S3 bucket to upload to.
-`accessKeyId` | &nbsp; | `AWS_ACCESS_KEY_ID` |AWS access key ID
-`secretAccessKey` | &nbsp; | `AWS_SECRET_ACCESS_KEY` | AWS access secret
+`bucket` | `--bucket` | `SSUP_BUCKET` | **(Required)** Amazon S3 bucket to upload to.
+`accessKeyId` | &nbsp; | `SSUP_AWS_ACCESS_KEY_ID` |AWS access key ID
+`secretAccessKey` | &nbsp; | `SSUP_AWS_SECRET_ACCESS_KEY` | AWS access secret
 `acl` | `--acl` | | ACL to set on each uploaded object. Defaults to `public-read`.
 `checkOngoingInvalidations` | &nbsp; | | Do not upload changed files if the CloudFront distribution has ongoing invalidations. Experimental. Defaults to `false`.
 `concurrency` | `--concurrency` | | Max number of files to upload simultaneously. Defaults to `5`.
  &nbsp; | `--config` | | Path to a JSON file to load options from.
-`distributionId` | `--distribution` | `DISTRIBUTION_ID` | CloudFront distribution ID to create invalidations in.
+`distributionId` | `--distribution` | `SSUP_DISTRIBUTION_ID` | CloudFront distribution ID to create invalidations in.
 `dryRun` | `--dry-run` | | Do everything normally, just don't actually upload anything.
 `granularInvalidation` | `--granular-invalidation` | | Create invalidations for individual changed files. Normally the entire distribution is invalidated with `/*`.
-`keyPrefix` | `--key-prefix` | | Prefix for S3 object keys. A trailing slash is always added to the CLI option if one is not given.
+`keyPrefix` | `--key-prefix` | `SSUP_KEY_PREFIX` | Prefix for S3 object keys. A trailing slash is always added to the CLI option if one is not given.
 `checkMD5` | `--check-md5`<br>`--no-check-md5` | | Check for changed files based on the `content-md5` metadata header. Don't disable this if you're using `granularInvalidation`. Defaults to `true`.
 `setMD5` | `--set-md5`<br>`--no-set-md5` | | Set the `content-md5` metadata entry for uploaded files. Defaults to `true`.
 &nbsp; | `--quiet` | | Suppress informational messages.
