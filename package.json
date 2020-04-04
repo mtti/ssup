@@ -24,7 +24,7 @@
   "dependencies": {
     "aws-sdk": "2.463.0",
     "fs-extra": "8.0.1",
-    "minimist": "1.2.0",
+    "minimist": "1.2.5",
     "p-limit": "2.2.0"
   },
   "devDependencies": {
